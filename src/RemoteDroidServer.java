@@ -48,15 +48,12 @@ public class RemoteDroidServer {
             try {
 
                 line = in.readLine();
-                System.out.println(line);//read input from client
-                if (line.equals("left")) {
-                    robot.mousePress(InputEvent.BUTTON1_MASK);
-                    do {
-
-                        line = in.readLine();
-                        System.out.println(line);
-                    }while(line.equals("left"));
-                    robot.mouseRelease(InputEvent.BUTTON1_MASK);
+                //System.out.println(line);//read input from client
+                if (line.equals("left_down")) {
+                    robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);                    	
+                }else if(line.equals("left_up")){
+                	robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+                	
                 } else if (line.equals("right")) {
                     robot.mousePress(InputEvent.BUTTON3_MASK);
                     robot.mouseRelease(InputEvent.BUTTON3_MASK);
@@ -73,8 +70,9 @@ public class RemoteDroidServer {
                         x = x + dy / 5;
                         y = y - dx / 5;
                         robot.mouseMove(x, y);
-                        robot.delay(3);
+                        robot.delay(1);
                     }
+                    //robot.mouseMove(x+2*dy, y-2*dx);
                     if (x < 0)
                         x = 0;
                     else if (x > 1366)
