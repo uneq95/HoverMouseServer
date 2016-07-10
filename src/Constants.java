@@ -15,4 +15,6 @@ public class Constants {
 
 	static final String PAGE_UP_ACTION = "PU";
 	static final String PAGE_DOWN_ACTION = "PD";
+	
+	static final String SCROLL_ACTION="SA";
 }

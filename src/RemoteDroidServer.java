@@ -23,7 +23,7 @@ public class RemoteDroidServer {
 	private static String line;
 	private static boolean isConnected = true;
 	private static Robot robot;
-	private static boolean isSecondaryCamActive =false;
+	private static boolean isSecondaryCamActive = false;
 
 	public static void main(String[] args) {
 
@@ -57,25 +57,34 @@ public class RemoteDroidServer {
 
 				line = in.readLine();
 				// System.out.println(line);//read input from client
-				if (line.equals(Constants.LEFT_DOWN_ACTION)) {
+				switch (line) {
+				case Constants.LEFT_DOWN_ACTION:
 					robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-				} else if (line.equals(Constants.LEFT_UP_ACTION)) {
+					break;
+				case Constants.LEFT_UP_ACTION:
 					robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
-				} else if (line.equals(Constants.RIGHT_CLICK_ACTION)) {
+					break;
+				case Constants.RIGHT_CLICK_ACTION:
 					robot.mousePress(InputEvent.BUTTON3_MASK);
 					robot.mouseRelease(InputEvent.BUTTON3_MASK);
-				} else if(line.equals(Constants.CAMERA_SWAP)){
-					isSecondaryCamActive=true;
-				}else if(line.equals(Constants.PAGE_UP_ACTION)){
-					 robot.keyPress(KeyEvent.VK_PAGE_UP);
-				     robot.keyRelease(KeyEvent.VK_PAGE_UP);
-					
-				}else if(line.equals(Constants.PAGE_DOWN_ACTION)){
-					
+					break;
+				case Constants.CAMERA_SWAP:
+					isSecondaryCamActive = !isSecondaryCamActive;
+					break;
+				case Constants.PAGE_UP_ACTION:
+					robot.keyPress(KeyEvent.VK_PAGE_UP);
+					robot.keyRelease(KeyEvent.VK_PAGE_UP);
+					break;
+				case Constants.PAGE_DOWN_ACTION:
 					robot.keyPress(KeyEvent.VK_PAGE_DOWN);
-				     robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
-				}else {
+					robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+					break;
+				case Constants.SCROLL_ACTION:
+					String scrollData =in.readLine();
+					int wheelAmt =Integer.parseInt(scrollData);
+					robot.mouseWheel(wheelAmt/100);
+					break;
+				default:
 					System.out.println(line); // print whatever we get from
 					// client
 					String[] cordinates = line.split(" ");
@@ -89,18 +98,18 @@ public class RemoteDroidServer {
 					x = p.x;
 					y = p.y;
 					// MouseUtils.mouseGlide(x, y, dx, dy, 100, 100);
-					if(!isSecondaryCamActive){
-						//when primary camera is active
+					if (!isSecondaryCamActive) {
+						// when primary camera is active
 						x = x + dy;
 						y = y - dx;
-					}else{
-						//when secondary camera is active
-						//TODO change code to adapt to secondary cam
+					} else {
+						// when secondary camera is active
+						// TODO change code to adapt to secondary cam
 						x = x + dy;
-						y = y - dx;
+						y = y + dx;
 					}
-					
-//					robot.mouseMove(x, y);
+
+					 robot.mouseMove(x, y);
 					/*
 					 * for (i = 0; i < 10; i++) { x = x + dy / 5; y = y - dx /
 					 * 5; robot.mouseMove(x, y); robot.delay(1); }
@@ -115,13 +124,17 @@ public class RemoteDroidServer {
 						y = 0;
 					else if (y > 768)
 						y = 768;
-					robot.mouseMove(x, y);
-					// System.out.println(x);
-					// System.out.println(y);
+//					robot.mouseMove(x, y);
 				}
 
 			} catch (IOException e) {
 				System.out.println("Read failed");
+				try {
+					server.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				System.exit(-1);
 			}
 		}
