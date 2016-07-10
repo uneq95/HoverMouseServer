@@ -12,4 +12,7 @@ public class Constants {
 	static final String LEFT_UP_ACTION = "00";
 
 	static final String RIGHT_CLICK_ACTION = "0X";
+
+	static final String PAGE_UP_ACTION = "PU";
+	static final String PAGE_DOWN_ACTION = "PD";
 }

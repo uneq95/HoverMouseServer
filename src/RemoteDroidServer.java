@@ -67,6 +67,14 @@ public class RemoteDroidServer {
 					robot.mouseRelease(InputEvent.BUTTON3_MASK);
 				} else if(line.equals(Constants.CAMERA_SWAP)){
 					isSecondaryCamActive=true;
+				}else if(line.equals(Constants.PAGE_UP_ACTION)){
+					 robot.keyPress(KeyEvent.VK_PAGE_UP);
+				     robot.keyRelease(KeyEvent.VK_PAGE_UP);
+					
+				}else if(line.equals(Constants.PAGE_DOWN_ACTION)){
+					
+					robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+				     robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
 				}else {
 					System.out.println(line); // print whatever we get from
 					// client
