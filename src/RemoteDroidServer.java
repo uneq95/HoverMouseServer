@@ -27,6 +27,7 @@ public class RemoteDroidServer {
 
 	public static void main(String[] args) {
 
+		new ServerUtil();
 		try {
 			robot = new Robot();
 			server = new ServerSocket(Constants.SERVER_PORT); // Create a server
@@ -108,8 +109,9 @@ public class RemoteDroidServer {
 						x = x + dy;
 						y = y + dx;
 					}
-
-					 robot.mouseMove(x, y);
+					//x=3*x;
+					//y=3*y;
+					robot.mouseMove(x, y);
 					/*
 					 * for (i = 0; i < 10; i++) { x = x + dy / 5; y = y - dx /
 					 * 5; robot.mouseMove(x, y); robot.delay(1); }
@@ -124,6 +126,7 @@ public class RemoteDroidServer {
 						y = 0;
 					else if (y > 768)
 						y = 768;
+					
 //					robot.mouseMove(x, y);
 				}
 
